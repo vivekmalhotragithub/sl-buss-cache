@@ -28,3 +28,14 @@ the rest api is available
 http://localhost:16000/api/top10BusLines
 ```
 
+## Running the application 
+
+* in Intellij
+run the application with run config .idea/runConfigurations/Application.xml
+
+* as fat jar
+```shell
+mvn clean package
+java -jar target/sl-buss-longest-1.0-SNAPSHOT.jar config/dev.yaml
+```
+

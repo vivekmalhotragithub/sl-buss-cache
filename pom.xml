@@ -16,9 +16,9 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
 
-        <vertx.version>4.4.0</vertx.version>
+        <vertx.version>4.4.1</vertx.version>
         <netty.version>4.1.89.Final</netty.version>
-        <jackson.version>2.14.2</jackson.version>
+        <jackson.version>2.15.0</jackson.version>
 
         <!-- logging -->
         <slf4j.version>2.0.7</slf4j.version>
@@ -28,6 +28,8 @@
         <spock.version>2.4-M1-groovy-4.0</spock.version>
         <groovy-json.version>4.0.11</groovy-json.version>
         <awaitility.version>4.2.0</awaitility.version>
+        <skipTests>false</skipTests>
+        <skip.surefire.tests>${skipTests}</skip.surefire.tests>
 
         <main.class>com.sbab.assignment.Bootstrap</main.class>
         <gmavenplus-plugin.version>1.13.1</gmavenplus-plugin.version>
@@ -178,6 +180,24 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- Configure surefire to include *Spec* -->
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <!-- allows skipping surefire tests by supplying -Dskip.surefire.tests based on https://stackoverflow.com/a/17932772-->
+                    <skipTests>${skip.surefire.tests}</skipTests>
+                    <testSourceDirectory>src/test/groovy</testSourceDirectory>
+                    <useFile>false</useFile>
+                    <includes>
+                        <include>**/*Spec.java</include>
+                    </includes>
+                    <argLine>
+                        --add-opens java.base/jdk.internal.misc=ALL-UNNAMED
+                        --add-opens java.base/java.nio=ALL-UNNAMED
+                    </argLine>
+                </configuration>
             </plugin>
         </plugins>
         <pluginManagement>
